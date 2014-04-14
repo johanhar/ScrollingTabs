@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JOHAAppDelegate : UIResponder <UIApplicationDelegate>
+@interface JHRAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Johannes Harestad. All rights reserved.
 //
 
-#import "JOHAAppDelegate.h"
+#import "JHRAppDelegate.h"
 
-@implementation JOHAAppDelegate
+@implementation JHRAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

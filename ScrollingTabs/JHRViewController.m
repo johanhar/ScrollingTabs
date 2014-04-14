@@ -6,18 +6,18 @@
 //  Copyright (c) 2014 Johannes Harestad. All rights reserved.
 //
 
-#import "JOHAViewController.h"
+#import "JHRViewController.h"
 
-@interface JOHAViewController ()
+@interface JHRViewController ()
 
 @end
 
-@implementation JOHAViewController
+@implementation JHRViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
 }
 
 - (void)didReceiveMemoryWarning

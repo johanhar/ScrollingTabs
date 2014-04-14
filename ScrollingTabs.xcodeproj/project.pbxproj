@@ -12,15 +12,17 @@
 		8F39933318FC09240065813D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F39933218FC09240065813D /* UIKit.framework */; };
 		8F39933918FC09240065813D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8F39933718FC09240065813D /* InfoPlist.strings */; };
 		8F39933B18FC09240065813D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F39933A18FC09240065813D /* main.m */; };
-		8F39933F18FC09240065813D /* JOHAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F39933E18FC09240065813D /* JOHAAppDelegate.m */; };
+		8F39933F18FC09240065813D /* JHRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F39933E18FC09240065813D /* JHRAppDelegate.m */; };
 		8F39934218FC09240065813D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F39934018FC09240065813D /* Main.storyboard */; };
-		8F39934518FC09240065813D /* JOHAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F39934418FC09240065813D /* JOHAViewController.m */; };
+		8F39934518FC09240065813D /* JHRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F39934418FC09240065813D /* JHRViewController.m */; };
 		8F39934718FC09240065813D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F39934618FC09240065813D /* Images.xcassets */; };
 		8F39934E18FC09240065813D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F39934D18FC09240065813D /* XCTest.framework */; };
 		8F39934F18FC09240065813D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F39932E18FC09240065813D /* Foundation.framework */; };
 		8F39935018FC09240065813D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F39933218FC09240065813D /* UIKit.framework */; };
 		8F39935818FC09240065813D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8F39935618FC09240065813D /* InfoPlist.strings */; };
 		8F39935A18FC09240065813D /* ScrollingTabsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F39935918FC09240065813D /* ScrollingTabsTests.m */; };
+		8F39936518FC0B040065813D /* JHRPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F39936418FC0B040065813D /* JHRPageViewController.m */; };
+		8F39936818FC0F360065813D /* JHRContentScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F39936718FC0F360065813D /* JHRContentScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,17 +44,21 @@
 		8F39933818FC09240065813D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8F39933A18FC09240065813D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8F39933C18FC09240065813D /* ScrollingTabs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ScrollingTabs-Prefix.pch"; sourceTree = "<group>"; };
-		8F39933D18FC09240065813D /* JOHAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JOHAAppDelegate.h; sourceTree = "<group>"; };
-		8F39933E18FC09240065813D /* JOHAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JOHAAppDelegate.m; sourceTree = "<group>"; };
+		8F39933D18FC09240065813D /* JHRAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JHRAppDelegate.h; sourceTree = "<group>"; };
+		8F39933E18FC09240065813D /* JHRAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JHRAppDelegate.m; sourceTree = "<group>"; };
 		8F39934118FC09240065813D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		8F39934318FC09240065813D /* JOHAViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JOHAViewController.h; sourceTree = "<group>"; };
-		8F39934418FC09240065813D /* JOHAViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JOHAViewController.m; sourceTree = "<group>"; };
+		8F39934318FC09240065813D /* JHRViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JHRViewController.h; sourceTree = "<group>"; };
+		8F39934418FC09240065813D /* JHRViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JHRViewController.m; sourceTree = "<group>"; };
 		8F39934618FC09240065813D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8F39934C18FC09240065813D /* ScrollingTabsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollingTabsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F39934D18FC09240065813D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		8F39935518FC09240065813D /* ScrollingTabsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ScrollingTabsTests-Info.plist"; sourceTree = "<group>"; };
 		8F39935718FC09240065813D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8F39935918FC09240065813D /* ScrollingTabsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollingTabsTests.m; sourceTree = "<group>"; };
+		8F39936318FC0B040065813D /* JHRPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHRPageViewController.h; sourceTree = "<group>"; };
+		8F39936418FC0B040065813D /* JHRPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHRPageViewController.m; sourceTree = "<group>"; };
+		8F39936618FC0F360065813D /* JHRContentScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHRContentScrollView.h; sourceTree = "<group>"; };
+		8F39936718FC0F360065813D /* JHRContentScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHRContentScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,11 +118,15 @@
 		8F39933418FC09240065813D /* ScrollingTabs */ = {
 			isa = PBXGroup;
 			children = (
-				8F39933D18FC09240065813D /* JOHAAppDelegate.h */,
-				8F39933E18FC09240065813D /* JOHAAppDelegate.m */,
+				8F39933D18FC09240065813D /* JHRAppDelegate.h */,
+				8F39933E18FC09240065813D /* JHRAppDelegate.m */,
 				8F39934018FC09240065813D /* Main.storyboard */,
-				8F39934318FC09240065813D /* JOHAViewController.h */,
-				8F39934418FC09240065813D /* JOHAViewController.m */,
+				8F39934318FC09240065813D /* JHRViewController.h */,
+				8F39934418FC09240065813D /* JHRViewController.m */,
+				8F39936318FC0B040065813D /* JHRPageViewController.h */,
+				8F39936418FC0B040065813D /* JHRPageViewController.m */,
+				8F39936618FC0F360065813D /* JHRContentScrollView.h */,
+				8F39936718FC0F360065813D /* JHRContentScrollView.m */,
 				8F39934618FC09240065813D /* Images.xcassets */,
 				8F39933518FC09240065813D /* Supporting Files */,
 			);
@@ -196,7 +206,7 @@
 		8F39932318FC09240065813D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = JOHA;
+				CLASSPREFIX = JHR;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Johannes Harestad";
 				TargetAttributes = {
@@ -250,9 +260,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F39933F18FC09240065813D /* JOHAAppDelegate.m in Sources */,
+				8F39933F18FC09240065813D /* JHRAppDelegate.m in Sources */,
+				8F39936518FC0B040065813D /* JHRPageViewController.m in Sources */,
 				8F39933B18FC09240065813D /* main.m in Sources */,
-				8F39934518FC09240065813D /* JOHAViewController.m in Sources */,
+				8F39936818FC0F360065813D /* JHRContentScrollView.m in Sources */,
+				8F39934518FC09240065813D /* JHRViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
