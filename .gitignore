@@ -1,0 +1,21 @@
+# xcode noise
+build/*
+*.pbxuser
+*.mode1v3
+*~
+*.xcuserstate
+
+# osx noise
+profile
+
+*.lock
+*.DS_Store
+*.DS_Store?
+*.swp
+*.out
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.log
