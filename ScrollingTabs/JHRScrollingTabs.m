@@ -13,6 +13,9 @@
 @property (nonatomic) NSMutableArray *labels;
 @property (nonatomic) UIView *wrapper;
 @property (nonatomic) UIView *footer;
+@property (nonatomic) UIView *tracker;
+
+@property (nonatomic) NSLayoutConstraint *trackerPositionConstraints;
 
 @end
 
@@ -30,10 +33,15 @@
 - (void)privateInit
 {
     self.backgroundColor = [UIColor purpleColor];
+    self.bounces = NO;
     
     _labels = [[NSMutableArray alloc] init];
     _wrapper = [[UIView alloc] init];
-    _footer = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame) - 5, CGRectGetWidth(self.frame), 5)];
+    //_footer = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame) - 5, CGRectGetWidth(self.frame), 5)];
+    _footer = [[UIView alloc] init];
+    _tracker = [[UIView alloc] init];
+    
+    _tracker.backgroundColor = [UIColor blueColor];
     
     _wrapper.layer.borderColor = [UIColor blackColor].CGColor;
     _wrapper.layer.borderWidth = 1;
@@ -43,20 +51,14 @@
     
     _wrapper.translatesAutoresizingMaskIntoConstraints = NO;
     _footer.translatesAutoresizingMaskIntoConstraints = NO;
+    _tracker.translatesAutoresizingMaskIntoConstraints = NO;
     self.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self addSubview:_wrapper];
-    [self addSubview:_footer];
+    [_wrapper addSubview:_footer];
+    [_wrapper addSubview:_tracker];
     
-    // Center _wrapper X in self
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:_wrapper
-                                                          attribute:NSLayoutAttributeCenterX
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self
-                                                          attribute:NSLayoutAttributeCenterX
-                                                         multiplier:1.0
-                                                           constant:0.0]];
-    
+    // Wrapper will start from top of self
     [self addConstraint: [NSLayoutConstraint constraintWithItem:_wrapper
                                                       attribute:NSLayoutAttributeTop
                                                       relatedBy:NSLayoutRelationEqual
@@ -64,25 +66,17 @@
                                                       attribute:NSLayoutAttributeTop
                                                      multiplier:1.0
                                                        constant:0]];
-    
+    // Wrapper will have the same height as self
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_wrapper
-                                                          attribute:NSLayoutAttributeHeight
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self
-                                                          attribute:NSLayoutAttributeHeight
-                                                         multiplier:1.0
-                                                           constant:-5]];
-     
+                                                     attribute:NSLayoutAttributeHeight
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeHeight
+                                                    multiplier:1.0
+                                                      constant:0]];
     
-    /*
-    NSArray *wrapperYConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[wrapper]-0-|"
-                                                                           options:0
-                                                                           metrics:nil
-                                                                             views:@{@"wrapper": _wrapper}];
-    [self addConstraints:wrapperYConstraints];
-     */
-    
-    NSArray *labels = @[@"Some stuff", @"Something cool", @"Autolayout ftw"];
+    NSArray *labels = @[@"Some stuff", @"Something cool", @"Autolayout ftw", @"hmmm", @"heahea", @"craaap"];
+    //NSArray *labels = @[@"Some stuff", @"Something cool"];
     for (NSString *label in labels) {
         UILabel *uilabel = [[UILabel alloc] init];
         uilabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -113,16 +107,73 @@
     
     [_wrapper addConstraints:horizontalConstraints];
     
+    // All labels will be horizontally centered in wrapper (they share the same baseline, so we only center first label)
+    [_wrapper addConstraint:[NSLayoutConstraint constraintWithItem:_labels[0]
+                                                     attribute:NSLayoutAttributeCenterY
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:_wrapper
+                                                     attribute:NSLayoutAttributeCenterY
+                                                    multiplier:1.0
+                                                      constant:0.0]];
     
-    NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[label]|"
-                                                                           options:0
-                                                                           metrics:nil
-                                                                             views:@{@"label": _labels[0]}];
-     
     
-    [_wrapper addConstraints:verticalConstraints];
+    CGSize size = [_wrapper systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    if (size.width <= self.frame.size.width) {
+        // Wrapper will be centered in self
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:_wrapper
+                                                         attribute:NSLayoutAttributeCenterX
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self
+                                                         attribute:NSLayoutAttributeCenterX
+                                                        multiplier:1.0
+                                                          constant:0.0]];
+    } else {
+        // Wrapper will start from left in self
+        [self addConstraint: [NSLayoutConstraint constraintWithItem:_wrapper
+                                                          attribute:NSLayoutAttributeLeft
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeLeft
+                                                         multiplier:1.0
+                                                           constant:0]];
+    }
     
-    NSLog(@"%@", horizontalVfl);
+    NSArray *footerHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[footer]-0-|"
+                                                                                   options:0
+                                                                                   metrics:0
+                                                                                     views:@{@"footer": _footer}];
+    
+    NSArray *footerVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[footer(==5)]-0-|"
+                                                                                 options:0
+                                                                                 metrics:nil
+                                                                                   views:@{@"footer": _footer}];
+    [_wrapper addConstraints:footerHorizontalConstraints];
+    [_wrapper addConstraints:footerVerticalConstraints];
+    
+    
+    NSArray *verticalTrackerConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[tracker(==10)]-0-|"
+                                                                                  options:0
+                                                                                  metrics:nil
+                                                                                    views:@{@"tracker": _tracker}];
+    [_wrapper addConstraints:verticalTrackerConstraints];
+    
+    
+    
+    NSArray *horizontalTrackerConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[tracker(==10)]"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"tracker": _tracker}];
+    [_wrapper addConstraints:horizontalTrackerConstraints];
+    
+    _trackerPositionConstraints = [NSLayoutConstraint constraintWithItem:_tracker
+                                                               attribute:NSLayoutAttributeCenterX
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:_labels[0]
+                                                               attribute:NSLayoutAttributeCenterX
+                                                              multiplier:1.0
+                                                                constant:0.0];
+
+    [_wrapper addConstraint:_trackerPositionConstraints];
 }
 
 - (NSDictionary *)dictionaryOfLabelBindings
@@ -139,17 +190,35 @@
 
 - (void)test
 {
-    for (UILabel *label in _labels) {
-        /*
-        CGSize size = [label systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-        CGSize size2 = [label intrinsicContentSize];
-        CGRect rect = [label alignmentRectForFrame:self.frame];
-        CGRect rect2 = [label frameForAlignmentRect:rect];
-        NSLog(@"W: %f, H :%f, W2: %f, H2: %f, X: %f, Y: %f", size.width, size.height, size2.width, size2.height, rect2.origin.x, rect2.origin.y);
-         */
-        UIEdgeInsets uei = [label alignmentRectInsets];
-        NSLog(@"Top: %f, Right: %f, Bottom: %f, Left: %f", uei.top, uei.right, uei.bottom, uei.left);
-    }
+    CGSize size = [_wrapper systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    //_footer.frame = CGRectMake(_footer.frame.origin.x - 150, _footer.frame.origin.y, size.width + 300, _footer.frame.size.height);
+    [self setContentSize:size];
+}
+
+- (void)animateTest
+{
+    
+    [_wrapper removeConstraint:_trackerPositionConstraints];
+    
+    _trackerPositionConstraints = [NSLayoutConstraint constraintWithItem:_tracker
+                                                               attribute:NSLayoutAttributeCenterX
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:_labels[[_labels count] - 1]
+                                                               attribute:NSLayoutAttributeCenterX
+                                                              multiplier:1.0
+                                                                constant:0.0];
+    
+    [_wrapper addConstraint:_trackerPositionConstraints];
+    
+    [UIView animateWithDuration:2 animations:^{
+        [self layoutIfNeeded];
+    }];
+    
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self animateTest];
 }
 
 @end
