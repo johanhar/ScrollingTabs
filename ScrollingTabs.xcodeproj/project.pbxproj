@@ -22,7 +22,8 @@
 		8F39935818FC09240065813D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8F39935618FC09240065813D /* InfoPlist.strings */; };
 		8F39935A18FC09240065813D /* ScrollingTabsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F39935918FC09240065813D /* ScrollingTabsTests.m */; };
 		8F39936518FC0B040065813D /* JHRPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F39936418FC0B040065813D /* JHRPageViewController.m */; };
-		8F39936818FC0F360065813D /* JHRContentScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F39936718FC0F360065813D /* JHRContentScrollView.m */; };
+		8FC38D3218FE83C500333E1D /* JHRContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC38D3118FE83C500333E1D /* JHRContainerViewController.m */; };
+		8FC38D3518FE985600333E1D /* JHRScrollingTabs.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC38D3418FE985600333E1D /* JHRScrollingTabs.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,8 +58,10 @@
 		8F39935918FC09240065813D /* ScrollingTabsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollingTabsTests.m; sourceTree = "<group>"; };
 		8F39936318FC0B040065813D /* JHRPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHRPageViewController.h; sourceTree = "<group>"; };
 		8F39936418FC0B040065813D /* JHRPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHRPageViewController.m; sourceTree = "<group>"; };
-		8F39936618FC0F360065813D /* JHRContentScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHRContentScrollView.h; sourceTree = "<group>"; };
-		8F39936718FC0F360065813D /* JHRContentScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHRContentScrollView.m; sourceTree = "<group>"; };
+		8FC38D3018FE83C500333E1D /* JHRContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHRContainerViewController.h; sourceTree = "<group>"; };
+		8FC38D3118FE83C500333E1D /* JHRContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHRContainerViewController.m; sourceTree = "<group>"; };
+		8FC38D3318FE985600333E1D /* JHRScrollingTabs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHRScrollingTabs.h; sourceTree = "<group>"; };
+		8FC38D3418FE985600333E1D /* JHRScrollingTabs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHRScrollingTabs.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,10 +126,12 @@
 				8F39934018FC09240065813D /* Main.storyboard */,
 				8F39934318FC09240065813D /* JHRViewController.h */,
 				8F39934418FC09240065813D /* JHRViewController.m */,
+				8FC38D3018FE83C500333E1D /* JHRContainerViewController.h */,
+				8FC38D3118FE83C500333E1D /* JHRContainerViewController.m */,
+				8FC38D3318FE985600333E1D /* JHRScrollingTabs.h */,
+				8FC38D3418FE985600333E1D /* JHRScrollingTabs.m */,
 				8F39936318FC0B040065813D /* JHRPageViewController.h */,
 				8F39936418FC0B040065813D /* JHRPageViewController.m */,
-				8F39936618FC0F360065813D /* JHRContentScrollView.h */,
-				8F39936718FC0F360065813D /* JHRContentScrollView.m */,
 				8F39934618FC09240065813D /* Images.xcassets */,
 				8F39933518FC09240065813D /* Supporting Files */,
 			);
@@ -262,8 +267,9 @@
 			files = (
 				8F39933F18FC09240065813D /* JHRAppDelegate.m in Sources */,
 				8F39936518FC0B040065813D /* JHRPageViewController.m in Sources */,
+				8FC38D3518FE985600333E1D /* JHRScrollingTabs.m in Sources */,
+				8FC38D3218FE83C500333E1D /* JHRContainerViewController.m in Sources */,
 				8F39933B18FC09240065813D /* main.m in Sources */,
-				8F39936818FC0F360065813D /* JHRContentScrollView.m in Sources */,
 				8F39934518FC09240065813D /* JHRViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -469,6 +475,7 @@
 				8F39935F18FC09240065813D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8F39936018FC09240065813D /* Build configuration list for PBXNativeTarget "ScrollingTabsTests" */ = {
 			isa = XCConfigurationList;
@@ -477,6 +484,7 @@
 				8F39936218FC09240065813D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

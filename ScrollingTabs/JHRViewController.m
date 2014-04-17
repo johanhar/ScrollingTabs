@@ -7,8 +7,11 @@
 //
 
 #import "JHRViewController.h"
+#import "JHRScrollingTabs.h"
 
 @interface JHRViewController ()
+
+@property (weak, nonatomic) IBOutlet JHRScrollingTabs *tabsView;
 
 @end
 
@@ -18,6 +21,13 @@
 {
     [super viewDidLoad];
     
+    
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    [_tabsView test];
 }
 
 - (void)didReceiveMemoryWarning

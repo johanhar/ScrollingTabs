@@ -10,7 +10,4 @@
 
 @interface JHRViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UIScrollView *tabs;
-@property (weak, nonatomic) IBOutlet UIScrollView *content;
-
 @end
