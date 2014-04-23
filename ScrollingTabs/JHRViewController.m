@@ -21,7 +21,6 @@
 {
     [super viewDidLoad];
     [_tabsView setup];
-    NSLog(@"view did load");
 }
 
 - (void)viewDidLayoutSubviews
