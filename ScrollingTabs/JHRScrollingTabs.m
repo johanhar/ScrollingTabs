@@ -10,7 +10,7 @@
 
 @interface JHRScrollingTabs()
 
-@property (nonatomic) NSMutableArray *labels;
+@property (nonatomic) NSMutableArray *buttons;
 @property (nonatomic) NSMutableArray *separators;
 @property (nonatomic) UIView *wrapper;
 
@@ -46,7 +46,7 @@
     _trackerHeight          = 2;
     
     _tabsCreated            = NO;
-    _labels                 = [[NSMutableArray alloc] init];
+    _buttons                 = [[NSMutableArray alloc] init];
     _separators             = [[NSMutableArray alloc] init];
     _wrapper                = [[UIView alloc] init];
     _tracker                = [[UIView alloc] init];
@@ -79,10 +79,10 @@
     
     [self setWrappperYPosition];
     [self setWrapperHeight];
-    [self createLabels];
+    [self createButtons];
     [self createSeparators];
-    [self setLabelsXPosition];
-    [self setLabelsYPosition];
+    [self setButtonsXPosition];
+    [self setButtonsYPosition];
     [self setSeparatorsHeight];
     [self setSeparatorsYPosition];
     [self setWrapperXPosition];
@@ -101,9 +101,9 @@
 {
     NSInteger index = -1;
     index = [_tabs indexOfObject:tabName];
-    UILabel *label = _labels[index];
+    UIButton *button = _buttons[index];
    
-    if (index >= 0 && [label.text isEqualToString:tabName]) {
+    if (index >= 0 && [button.titleLabel.text isEqualToString:tabName]) {
         [self highlightTabAtIndex:index];
         
         [UIView animateWithDuration:0.5 animations:^{
@@ -122,7 +122,7 @@
     NSLayoutConstraint *centerConstraints = [NSLayoutConstraint constraintWithItem:_tracker
                                                                          attribute:NSLayoutAttributeCenterX
                                                                          relatedBy:NSLayoutRelationEqual
-                                                                            toItem:_labels[index]
+                                                                            toItem:_buttons[index]
                                                                          attribute:NSLayoutAttributeCenterX
                                                                         multiplier:1.0
                                                                           constant:0.0];
@@ -130,7 +130,7 @@
     NSLayoutConstraint *widthConstraints = [NSLayoutConstraint constraintWithItem:_tracker
                                                                         attribute:NSLayoutAttributeWidth
                                                                         relatedBy:NSLayoutRelationEqual
-                                                                           toItem:_labels[index]
+                                                                           toItem:_buttons[index]
                                                                         attribute:NSLayoutAttributeWidth
                                                                        multiplier:1.0
                                                                          constant:0.0];
@@ -160,7 +160,7 @@
                                                        constant:0]];
 }
 
-// Call this after adding the labels so actually have any content..
+// Call this after adding the buttons so actually have any content..
 - (void)setWrapperXPosition
 {
     [self addConstraint: [NSLayoutConstraint constraintWithItem:_wrapper
@@ -184,33 +184,33 @@
 }
 
 // With separator, we also set separator x position here
-- (void)setLabelsXPosition
+- (void)setButtonsXPosition
 {
     NSMutableString *vfl = [[NSMutableString alloc] init];
     [vfl setString:@"|-10-"];
-    for (int i = 0; i < [_labels count]; i++) {
+    for (int i = 0; i < [_buttons count]; i++) {
         if (i == 0) {
-            [vfl appendString:[NSString stringWithFormat:@"[label%d]", i]];
+            [vfl appendString:[NSString stringWithFormat:@"[button%d]", i]];
         } else {
-            [vfl appendString:[NSString stringWithFormat:@"-labelmargin-[separator%d(==1)]-labelmargin-[label%d]", i, i]];
+            [vfl appendString:[NSString stringWithFormat:@"-buttonmargin-[separator%d(==1)]-buttonmargin-[button%d]", i, i]];
         }
     }
     [vfl appendString:@"-10-|"];
     
     NSString *horizontalVfl = [NSString stringWithFormat:@"H:%@", vfl];
-    NSDictionary *views = [self dictionaryOfLabelBindings];
+    NSDictionary *views = [self dictionaryOfButtonBindings];
     
     NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:horizontalVfl
                                                                              options:0
-                                                                             metrics:@{@"labelmargin": @(10)}
+                                                                             metrics:@{@"buttonmargin": @(10)}
                                                                                views:views];
     [_wrapper addConstraints:horizontalConstraints];
 }
 
-- (void)setLabelsYPosition
+- (void)setButtonsYPosition
 {
-    for (UILabel *label in _labels) {
-        [_wrapper addConstraint:[NSLayoutConstraint constraintWithItem:label
+    for (UIButton *button in _buttons) {
+        [_wrapper addConstraint:[NSLayoutConstraint constraintWithItem:button
                                                              attribute:NSLayoutAttributeCenterY
                                                              relatedBy:NSLayoutRelationEqual
                                                                 toItem:_wrapper
@@ -234,23 +234,25 @@
     [self highlightTabAtIndex:0];
 }
 
-- (void)createLabels
+- (void)createButtons
 {
     for (NSString *tab in _tabs) {
-        UILabel *label  = [[UILabel alloc] init];
-        label.text      = tab;
-        label.font      = _titleFont;
-        label.textColor = _titleColor;
-        label.userInteractionEnabled = YES;
-        label.translatesAutoresizingMaskIntoConstraints = NO;
-        [_labels addObject:label];
-        [_wrapper addSubview:label];
+        UIButton *button  = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.translatesAutoresizingMaskIntoConstraints = NO;
+        [button setBackgroundColor:[UIColor clearColor]];
+        [button setTitle:[tab uppercaseString] forState:UIControlStateNormal];
+        [button setTitleColor:_titleColor forState:UIControlStateNormal];
+        [button setTitleColor:_titleColorHighligthed forState:UIControlStateHighlighted];
+        [button.titleLabel setFont:_titleFont];
+        [button addTarget:self action:@selector(buttonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        [_buttons addObject:button];
+        [_wrapper addSubview:button];
     }
 }
 
 - (void)createSeparators
 {
-    for (int i = 0; i < [_labels count] - 1; i++) {
+    for (int i = 0; i < [_buttons count] - 1; i++) {
         UIView *separator           = [[UIView alloc] init];
         separator.backgroundColor   = _separatorColor;
         separator.translatesAutoresizingMaskIntoConstraints = NO;
@@ -285,20 +287,32 @@
     }
 }
 
-- (NSDictionary *)dictionaryOfLabelBindings
+- (NSDictionary *)dictionaryOfButtonBindings
 {
     NSMutableDictionary *d = [[NSMutableDictionary alloc] init];
     NSInteger i = 0;
-    for (UILabel *label in _labels) {
-        NSString *key = [NSString stringWithFormat:@"label%ld", (long)i];
-        [d setObject:label forKey:key];
-        if (i < [_labels count] - 1) {
+    for (UIButton *button in _buttons) {
+        NSString *key = [NSString stringWithFormat:@"button%ld", (long)i];
+        [d setObject:button forKey:key];
+        if (i < [_buttons count] - 1) {
             NSString *keySep = [NSString stringWithFormat:@"separator%ld", (long)i + 1];
             [d setObject:_separators[i] forKey:keySep];
         }
         i++;
     }
     return d;
+}
+
+- (void)buttonTouched:(id)sender
+{
+    NSInteger index = -1;
+    index = [_buttons indexOfObject:sender];
+    if (index >= 0) {
+        [self highlightTabAtIndex:index];
+        [UIView animateWithDuration:0.5 animations:^{
+            [self layoutIfNeeded];
+        }];
+    }
 }
 
 @end
