@@ -20,14 +20,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
+    [_tabsView setup];
+    NSLog(@"view did load");
 }
 
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    [_tabsView test];
+    [_tabsView adjustContentSize];
 }
 
 - (void)didReceiveMemoryWarning
