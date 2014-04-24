@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8F274F8D190151920059B488 /* JHRTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F274F8C190151920059B488 /* JHRTab.m */; };
-		8F274F90190175400059B488 /* JHRScrollingTabsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F274F8F190175400059B488 /* JHRScrollingTabsController.m */; };
 		8F39932F18FC09240065813D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F39932E18FC09240065813D /* Foundation.framework */; };
 		8F39933118FC09240065813D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F39933018FC09240065813D /* CoreGraphics.framework */; };
 		8F39933318FC09240065813D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F39933218FC09240065813D /* UIKit.framework */; };
@@ -39,10 +37,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8F274F8B190151920059B488 /* JHRTab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHRTab.h; sourceTree = "<group>"; };
-		8F274F8C190151920059B488 /* JHRTab.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHRTab.m; sourceTree = "<group>"; };
-		8F274F8E190175400059B488 /* JHRScrollingTabsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHRScrollingTabsController.h; sourceTree = "<group>"; };
-		8F274F8F190175400059B488 /* JHRScrollingTabsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHRScrollingTabsController.m; sourceTree = "<group>"; };
 		8F39932B18FC09240065813D /* ScrollingTabs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrollingTabs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F39932E18FC09240065813D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8F39933018FC09240065813D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -136,10 +130,6 @@
 				8FC38D3118FE83C500333E1D /* JHRContainerViewController.m */,
 				8FC38D3318FE985600333E1D /* JHRScrollingTabs.h */,
 				8FC38D3418FE985600333E1D /* JHRScrollingTabs.m */,
-				8F274F8B190151920059B488 /* JHRTab.h */,
-				8F274F8C190151920059B488 /* JHRTab.m */,
-				8F274F8E190175400059B488 /* JHRScrollingTabsController.h */,
-				8F274F8F190175400059B488 /* JHRScrollingTabsController.m */,
 				8F39936318FC0B040065813D /* JHRPageViewController.h */,
 				8F39936418FC0B040065813D /* JHRPageViewController.m */,
 				8F39934618FC09240065813D /* Images.xcassets */,
@@ -275,13 +265,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F274F8D190151920059B488 /* JHRTab.m in Sources */,
 				8F39933F18FC09240065813D /* JHRAppDelegate.m in Sources */,
 				8F39936518FC0B040065813D /* JHRPageViewController.m in Sources */,
 				8FC38D3518FE985600333E1D /* JHRScrollingTabs.m in Sources */,
 				8FC38D3218FE83C500333E1D /* JHRContainerViewController.m in Sources */,
 				8F39933B18FC09240065813D /* main.m in Sources */,
-				8F274F90190175400059B488 /* JHRScrollingTabsController.m in Sources */,
 				8F39934518FC09240065813D /* JHRViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
