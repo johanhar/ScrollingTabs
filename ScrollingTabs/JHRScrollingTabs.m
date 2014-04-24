@@ -8,6 +8,8 @@
 
 #import "JHRScrollingTabs.h"
 
+static NSInteger buttonMargin = 10;
+
 @interface JHRScrollingTabs()
 
 @property (nonatomic) NSMutableArray *buttons;
@@ -52,16 +54,11 @@
     _tracker                = [[UIView alloc] init];
     _trackerConstraints     = [[NSMutableArray alloc] init];
     
-    _tabs                   = @[@"Some stuff", @"Some other stuff", @"Heahea", @"Hihi", @"huhu"];
+    _tabs                   = @[@"Some stuff", @"Some other stuff", @"Heahea", @"Hihi", @"huhu", @"hmmm", @"heaheaaaaafafafafafafafafafafa", @"jupps", @"jeppsi peppsi"];
     
     self.translatesAutoresizingMaskIntoConstraints      = NO;
     _tracker.translatesAutoresizingMaskIntoConstraints  = NO;
     _wrapper.translatesAutoresizingMaskIntoConstraints  = NO;
-    
-    /*
-    self.bounces = NO;
-    self.alwaysBounceHorizontal = NO;
-     */
 }
 
 #pragma mark - Creating the tabs and layout
@@ -138,6 +135,31 @@
     [_trackerConstraints addObject:centerConstraints];
     [_trackerConstraints addObject:widthConstraints];
     [_wrapper addConstraints:_trackerConstraints];
+    
+    UIButton *button = _buttons[index];
+    CGSize size = [button systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    CGPoint center = button.center;
+    
+    CGFloat a = center.x - (size.width / 2);
+    CGFloat b = center.x + (size.width / 2);
+    
+    [self adjustContentOffsetToFitBetween:a
+                                      and:b];
+}
+
+// Not the best method name -_-
+- (void)adjustContentOffsetToFitBetween:(CGFloat)a
+                                    and:(CGFloat)b
+{
+    CGPoint currentOffset = [self contentOffset];
+    CGFloat left = currentOffset.x;
+    CGFloat right = left + self.frame.size.width;
+    
+    if (left > a - buttonMargin) {
+        [self setContentOffset:CGPointMake(a - buttonMargin, 0) animated:YES];
+    } else if (b + buttonMargin > right) {
+        [self setContentOffset:CGPointMake((b + buttonMargin) - self.frame.size.width, 0) animated:YES];
+    }
 }
 
 - (void)removeAllSubviews
@@ -202,7 +224,7 @@
     
     NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:horizontalVfl
                                                                              options:0
-                                                                             metrics:@{@"buttonmargin": @(10)}
+                                                                             metrics:@{@"buttonmargin": @(buttonMargin)}
                                                                                views:views];
     [_wrapper addConstraints:horizontalConstraints];
 }
