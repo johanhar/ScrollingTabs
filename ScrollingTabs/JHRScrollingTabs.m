@@ -42,21 +42,58 @@ static NSInteger buttonMargin = 10;
     _separatorColor         = [UIColor colorWithWhite:0.5 alpha:0.8];
     _trackerColor           = [UIColor blackColor];
     _trackerHeight          = 2;
+    
+    self.translatesAutoresizingMaskIntoConstraints      = NO;
+}
 
-    _buttons                 = [[NSMutableArray alloc] init];
+#pragma mark - Accessors
+- (void)setTabs:(NSArray *)tabs
+{
+    if (tabs != _tabs) {
+        _tabs = [tabs copy];
+        [self setup];
+    }
+}
+
+#pragma mark - Instance methods
+- (void)adjustContentSize
+{
+    CGSize size = [_wrapper systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    [self setContentSize:size];
+}
+
+- (void)highlightTab:(NSString *)tabName
+{
+    if (!_tabs) return;
+    
+    NSInteger index = [_tabs indexOfObject:tabName];
+    
+    if (index == NSNotFound) return;
+    
+    [self highlightTabAtIndex:index];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self layoutIfNeeded];
+    }];
+}
+
+#pragma mark - Helpers
+- (void)setup
+{
+    [self removeAllSubviews];
+    [self setContentOffset:CGPointZero];
+    [self setContentSize:CGSizeZero];
+    
+    _buttons                = [[NSMutableArray alloc] init];
     _separators             = [[NSMutableArray alloc] init];
     _wrapper                = [[UIView alloc] init];
     _tracker                = [[UIView alloc] init];
     _trackerConstraints     = [[NSMutableArray alloc] init];
     
-    self.translatesAutoresizingMaskIntoConstraints      = NO;
     _tracker.translatesAutoresizingMaskIntoConstraints  = NO;
     _wrapper.translatesAutoresizingMaskIntoConstraints  = NO;
-}
-
-#pragma mark - Creating the tabs and layout
-- (void)setup
-{
+    
+    _wrapper.backgroundColor = [UIColor redColor];
+    
     [self addSubview:_wrapper];
     [_wrapper addSubview:_tracker];
     
@@ -74,30 +111,6 @@ static NSInteger buttonMargin = 10;
     [self setWrapperXPosition];
     [self setInitialTrackerPosition];
 }
-
-- (void)adjustContentSize
-{
-    CGSize size = [_wrapper systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    [self setContentSize:size];
-}
-
-- (void)highlightTab:(NSString *)tabName
-{
-    NSInteger index = -1;
-    index = [_tabs indexOfObject:tabName];
-    
-    UIButton *button = _buttons[index];
-   
-    if (index >= 0 && [button.titleLabel.text isEqualToString:[tabName uppercaseString]]) {
-        [self highlightTabAtIndex:index];
-        
-        [UIView animateWithDuration:0.3 animations:^{
-            [self layoutIfNeeded];
-        }];
-    }
-}
-
-#pragma mark - Helpers
 
 - (void)highlightTabAtIndex:(NSInteger)index
 {
@@ -131,8 +144,11 @@ static NSInteger buttonMargin = 10;
     CGFloat a = center.x - (size.width / 2);
     CGFloat b = center.x + (size.width / 2);
     
+    if (a < 0 || b < 0) return;
+    
     [self adjustContentOffsetToFitBetween:a
                                       and:b];
+     
 }
 
 // Not the best method name -_-
@@ -153,8 +169,9 @@ static NSInteger buttonMargin = 10;
 - (void)removeAllSubviews
 {
     NSArray *viewsToRemove = [self subviews];
-    for (UIView *v in viewsToRemove) {
+    for (__strong UIView *v in viewsToRemove) {
         [v removeFromSuperview];
+        v = nil;
     }
 }
 
@@ -312,15 +329,13 @@ static NSInteger buttonMargin = 10;
 
 - (void)buttonTouched:(id)sender
 {
-    NSInteger index = -1;
-    index = [_buttons indexOfObject:sender];
-    if (index >= 0) {
-        [self.tabsDelegate didHighlightTab:_tabs[index]];
-        [self highlightTabAtIndex:index];
-        [UIView animateWithDuration:0.5 animations:^{
-            [self layoutIfNeeded];
-        }];
-    }
+    // Expects everything to go smooth here, index should exist...
+    NSInteger index = [_buttons indexOfObject:sender];
+    [self.tabsDelegate didHighlightTab:_tabs[index]];
+    [self highlightTabAtIndex:index];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self layoutIfNeeded];
+    }];
 }
 
 @end

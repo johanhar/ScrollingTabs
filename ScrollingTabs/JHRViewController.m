@@ -26,8 +26,7 @@
     _tabsView.tabsDelegate = self;
     
     [self createPagesAndTabs];
-    
-    //[_tabsView setup];
+     
 }
 
 - (void)viewDidLayoutSubviews
@@ -82,6 +81,7 @@
     
     _pagesViewController.viewControllers = viewControllers;
     
+    
     _tabsView.tabs          = @[@"En",
                                 @"To",
                                 @"Tre",
@@ -92,6 +92,7 @@
                                 @"Åtte",
                                 @"Ni",
                                 @"Ti"];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -109,7 +110,13 @@
 #pragma mark - JHRContainerViewControllerDelegate
 - (void)didGoToPage:(NSString *)page
 {
-    [_tabsView highlightTab:page];
+    if ([page isEqualToString:@"Fire"]) {
+        _tabsView.tabs = @[@"Test", @"hehe", @"hehe", @"hehe", @"hehe", @"hehe", @"hehe", @"hehe", @"hehe", @"hehe", @"hehe", @"hehe"];
+        [_tabsView adjustContentSize];
+    } else {
+        [_tabsView highlightTab:page];
+    }
+    
 }
 
 @end

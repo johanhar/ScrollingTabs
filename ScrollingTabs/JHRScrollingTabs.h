@@ -24,7 +24,7 @@
 @property (nonatomic) UIColor *separatorColor;
 @property (nonatomic) UIColor *trackerColor;
 @property (nonatomic) CGFloat trackerHeight;
-@property (nonatomic) NSArray *tabs;
+@property (nonatomic, copy) NSArray *tabs;
 @property (nonatomic, weak) id<JHRScrollingTabsDelegate> tabsDelegate;
 
 - (void)setup;

@@ -39,6 +39,7 @@
     }
 }
 
+#pragma mark - Accessors
 - (void)setViewControllers:(NSArray *)viewControllers
 {
     if (viewControllers != _viewControllers) {
@@ -61,9 +62,7 @@
             NSInteger currentIndex = [self indexForViewController:currentVc];
             NSInteger newIndex = [self indexForViewController:page];
             
-            if (currentIndex == newIndex) {
-                return;
-            }
+            if (currentIndex == newIndex) return;
             
             UIPageViewControllerNavigationDirection direction = (newIndex < currentIndex) ?
                                                                 UIPageViewControllerNavigationDirectionReverse :
