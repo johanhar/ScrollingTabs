@@ -7,11 +7,13 @@
 //
 
 #import "JHRViewController.h"
-#import "JHRScrollingTabs.h"
 
 @interface JHRViewController ()
 
 @property (weak, nonatomic) IBOutlet JHRScrollingTabs *tabsView;
+
+// We set this in prepareForSegue
+@property (weak, nonatomic) JHRContainerViewController *pagesViewController;
 
 @end
 
@@ -20,7 +22,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [_tabsView setup];
+    
+    _tabsView.tabsDelegate = self;
+    
+    [self createPagesAndTabs];
+    
+    //[_tabsView setup];
 }
 
 - (void)viewDidLayoutSubviews
@@ -29,10 +36,80 @@
     [_tabsView adjustContentSize];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue
+                 sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"container"]) {
+        _pagesViewController = (JHRContainerViewController *)segue.destinationViewController;
+        _pagesViewController.pageViewDelegate = self;
+    }
+}
+
+- (void)createPagesAndTabs
+{
+    UIViewController<JHRPage> *en = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
+    UIViewController<JHRPage> *to = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
+    UIViewController<JHRPage> *tre = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
+    UIViewController<JHRPage> *fire = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
+    UIViewController<JHRPage> *fem = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
+    UIViewController<JHRPage> *seks = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
+    UIViewController<JHRPage> *syv = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
+    UIViewController<JHRPage> *atte = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
+    UIViewController<JHRPage> *ni = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
+    UIViewController<JHRPage> *ti = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
+    
+    en.pageName = @"En";
+    to.pageName = @"To";
+    tre.pageName = @"Tre";
+    fire.pageName = @"Fire";
+    fem.pageName = @"Femmmmmmmmmmmmmmmmmm";
+    seks.pageName = @"Seks";
+    syv.pageName = @"Syv";
+    atte.pageName = @"Åtte";
+    ni.pageName = @"Ni";
+    ti.pageName = @"Ti";
+    
+    NSArray *viewControllers = @[en,
+                                 to,
+                                 tre,
+                                 fire,
+                                 fem,
+                                 seks,
+                                 syv,
+                                 atte,
+                                 ni,
+                                 ti];
+    
+    _pagesViewController.viewControllers = viewControllers;
+    
+    _tabsView.tabs          = @[@"En",
+                                @"To",
+                                @"Tre",
+                                @"Fire",
+                                @"Femmmmmmmmmmmmmmmmmm",
+                                @"Seks",
+                                @"Syv",
+                                @"Åtte",
+                                @"Ni",
+                                @"Ti"];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - JHRScrollingTabsDelegate
+- (void)didHighlightTab:(NSString *)tabName
+{
+    [_pagesViewController goToPage:tabName];
+}
+
+#pragma mark - JHRContainerViewControllerDelegate
+- (void)didGoToPage:(NSString *)page
+{
+    [_tabsView highlightTab:page];
 }
 
 @end

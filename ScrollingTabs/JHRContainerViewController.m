@@ -12,9 +12,6 @@
 
 @property (nonatomic) UIPageViewController *pageViewController;
 
-@property (nonatomic) NSMutableArray *identifiers;
-@property (nonatomic) NSMutableArray *pages;
-
 @end
 
 @implementation JHRContainerViewController
@@ -22,9 +19,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    _identifiers                    = [[NSMutableArray alloc] init];
-    _pages                          = [[NSMutableArray alloc] init];
     
     _pageViewController             = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                                                                       navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
@@ -36,56 +30,107 @@
     [self.view addSubview:_pageViewController.view];
     [_pageViewController didMoveToParentViewController:self];
     
-    UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
-    [_pageViewController setViewControllers:@[vc]
-                                  direction:UIPageViewControllerNavigationDirectionForward
-                                   animated:NO
-                                 completion:nil];
+    if (_viewControllers) {
+        UIViewController *vc = [_viewControllers objectAtIndex:0];
+        [_pageViewController setViewControllers:@[vc]
+                                      direction:UIPageViewControllerNavigationDirectionForward
+                                       animated:NO
+                                     completion:nil];
+    }
+}
+
+- (void)setViewControllers:(NSArray *)viewControllers
+{
+    if (viewControllers != _viewControllers) {
+        _viewControllers = [viewControllers copy];
+        
+        UIViewController *vc = [_viewControllers objectAtIndex:0];
+        [_pageViewController setViewControllers:@[vc]
+                                      direction:UIPageViewControllerNavigationDirectionForward
+                                       animated:NO
+                                     completion:nil];
+    }
 }
 
 #pragma mark - Instance methods
-- (void)addPage:(UIViewController *)viewController
- withIdentifier:(NSString *)identifier
+- (void)goToPage:(NSString *)pageName
 {
-    [_pages addObject:viewController];
-    [_identifiers addObject:identifier];
+    for (UIViewController<JHRPage> *page in _viewControllers) {
+        if ([page.pageName isEqualToString:pageName]) {
+            UIViewController<JHRPage> *currentVc = _pageViewController.viewControllers[0];
+            NSInteger currentIndex = [self indexForViewController:currentVc];
+            NSInteger newIndex = [self indexForViewController:page];
+            
+            if (currentIndex == newIndex) {
+                return;
+            }
+            
+            UIPageViewControllerNavigationDirection direction = (newIndex < currentIndex) ?
+                                                                UIPageViewControllerNavigationDirectionReverse :
+                                                                UIPageViewControllerNavigationDirectionForward;
+            
+            __weak UIPageViewController *pvc = _pageViewController;
+            [pvc setViewControllers:@[page]
+                          direction:direction
+                           animated:YES
+                         completion:^(BOOL finished) {
+                             UIPageViewController *pvc2 = pvc;
+                             if (!pvc2) return;
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 [pvc2 setViewControllers:@[page]
+                                                direction:direction
+                                                 animated:NO
+                                               completion:nil];
+                             });
+                         }];
+            
+            return;
+        }
+    }
 }
 
-- (NSArray *)pages
+#pragma mark - Helpers
+- (UIViewController *)viewControllerAtIndex:(NSInteger)index
 {
-    return [_pages copy];
+    return [_viewControllers objectAtIndex:index];
 }
 
-- (UIViewController *)pageWithIdentifier:(NSString *)identifier
+- (NSInteger)indexForViewController:(UIViewController *)vc
 {
-    NSInteger index = [_identifiers indexOfObject:identifier];
-    if (index == NSNotFound) return nil;
-    return [_pages objectAtIndex:index];
-}
-
-- (NSString *)identifierForPage:(UIViewController *)viewController
-{
-    NSInteger index = [_pages indexOfObject:viewController];
-    if (index == NSNotFound) return nil;
-    return [_identifiers objectAtIndex:index];
+    return [_viewControllers indexOfObject:vc];
 }
 
 #pragma mark - UIPageViewControllerDataSource
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
       viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
-    return vc;
+    NSInteger index = [self indexForViewController:viewController];
+    if ((index - 1) < 0) {
+        return nil;
+    }
+    return [self viewControllerAtIndex:index - 1];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
        viewControllerAfterViewController:(UIViewController *)viewController
 {
-    UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
-    return vc;
+    NSInteger index = [self indexForViewController:viewController];
+    if (index + 1 >= [_viewControllers count]) {
+        return nil;
+    }
+    return [self viewControllerAtIndex:index + 1];
 }
 
 #pragma mark - UIPageViewControllerDelegate
-
+- (void)pageViewController:(UIPageViewController *)pageViewController
+        didFinishAnimating:(BOOL)finished
+   previousViewControllers:(NSArray *)previousViewControllers
+       transitionCompleted:(BOOL)completed
+{
+    if (completed) {
+        UIViewController<JHRPage> *currentVc = _pageViewController.viewControllers[0];
+        [_pageViewDelegate didGoToPage:currentVc.pageName];
+    }
+}
 
 @end

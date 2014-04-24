@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JHRScrollingTabs.h"
+#import "JHRContainerViewController.h"
 
-@interface JHRViewController : UIViewController
+@interface JHRViewController : UIViewController <JHRScrollingTabsDelegate, JHRContainerViewControllerDelegate>
 
 @end

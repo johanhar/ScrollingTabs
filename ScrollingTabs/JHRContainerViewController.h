@@ -8,19 +8,26 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol JHRContainerViewControllerDelegate <NSObject>
+
+- (void)didGoToPage:(NSString *)page;
+
+@end
+
+////////////////
+
+@protocol JHRPage <NSObject>
+
+@property (nonatomic) NSString *pageName;
+
+@end
+
+///////////////
+
 @interface JHRContainerViewController : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
-// Add a page (at the end)
-- (void)addPage:(UIViewController *)viewController
- withIdentifier:(NSString *)identifier;
-
-// Get all pages
-- (NSArray *)pages;
-
-// Get the page by it's identifier
-- (UIViewController *)pageWithIdentifier:(NSString *)identifier;
-
-// Get identifier for page
-- (NSString *)identifierForPage:(UIViewController *)viewController;
+@property (nonatomic, weak) id<JHRContainerViewControllerDelegate> pageViewDelegate;
+@property (nonatomic, copy) NSArray *viewControllers;
+- (void)goToPage:(NSString *)pageName;
 
 @end

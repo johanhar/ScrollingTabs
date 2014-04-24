@@ -14,6 +14,8 @@
 
 @implementation JHRPageViewController
 
+@synthesize pageName;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

@@ -15,12 +15,8 @@ static NSInteger buttonMargin = 10;
 @property (nonatomic) NSMutableArray *buttons;
 @property (nonatomic) NSMutableArray *separators;
 @property (nonatomic) UIView *wrapper;
-
 @property (nonatomic) UIView *tracker;
-
 @property (nonatomic) NSMutableArray *trackerConstraints;
-
-@property (nonatomic) BOOL tabsCreated;
 
 @end
 
@@ -46,15 +42,12 @@ static NSInteger buttonMargin = 10;
     _separatorColor         = [UIColor colorWithWhite:0.5 alpha:0.8];
     _trackerColor           = [UIColor blackColor];
     _trackerHeight          = 2;
-    
-    _tabsCreated            = NO;
+
     _buttons                 = [[NSMutableArray alloc] init];
     _separators             = [[NSMutableArray alloc] init];
     _wrapper                = [[UIView alloc] init];
     _tracker                = [[UIView alloc] init];
     _trackerConstraints     = [[NSMutableArray alloc] init];
-    
-    _tabs                   = @[@"Some stuff", @"Some other stuff", @"Heahea", @"Hihi", @"huhu", @"hmmm", @"heaheaaaaafafafafafafafafafafa", @"jupps", @"jeppsi peppsi"];
     
     self.translatesAutoresizingMaskIntoConstraints      = NO;
     _tracker.translatesAutoresizingMaskIntoConstraints  = NO;
@@ -64,10 +57,6 @@ static NSInteger buttonMargin = 10;
 #pragma mark - Creating the tabs and layout
 - (void)setup
 {
-    if (_tabsCreated) {
-        [self removeAllSubviews];
-    }
-    
     [self addSubview:_wrapper];
     [_wrapper addSubview:_tracker];
     
@@ -84,8 +73,6 @@ static NSInteger buttonMargin = 10;
     [self setSeparatorsYPosition];
     [self setWrapperXPosition];
     [self setInitialTrackerPosition];
-    
-    _tabsCreated = YES;
 }
 
 - (void)adjustContentSize
@@ -98,12 +85,13 @@ static NSInteger buttonMargin = 10;
 {
     NSInteger index = -1;
     index = [_tabs indexOfObject:tabName];
+    
     UIButton *button = _buttons[index];
    
-    if (index >= 0 && [button.titleLabel.text isEqualToString:tabName]) {
+    if (index >= 0 && [button.titleLabel.text isEqualToString:[tabName uppercaseString]]) {
         [self highlightTabAtIndex:index];
         
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.3 animations:^{
             [self layoutIfNeeded];
         }];
     }
@@ -172,7 +160,6 @@ static NSInteger buttonMargin = 10;
 
 - (void)setWrappperYPosition
 {
-    // Wrapper will start from top of self
     [self addConstraint: [NSLayoutConstraint constraintWithItem:_wrapper
                                                       attribute:NSLayoutAttributeTop
                                                       relatedBy:NSLayoutRelationEqual
@@ -182,7 +169,6 @@ static NSInteger buttonMargin = 10;
                                                        constant:0]];
 }
 
-// Call this after adding the buttons so actually have any content..
 - (void)setWrapperXPosition
 {
     [self addConstraint: [NSLayoutConstraint constraintWithItem:_wrapper
@@ -205,7 +191,6 @@ static NSInteger buttonMargin = 10;
                                                     constant:0]];
 }
 
-// With separator, we also set separator x position here
 - (void)setButtonsXPosition
 {
     NSMutableString *vfl = [[NSMutableString alloc] init];
@@ -330,6 +315,7 @@ static NSInteger buttonMargin = 10;
     NSInteger index = -1;
     index = [_buttons indexOfObject:sender];
     if (index >= 0) {
+        [self.tabsDelegate didHighlightTab:_tabs[index]];
         [self highlightTabAtIndex:index];
         [UIView animateWithDuration:0.5 animations:^{
             [self layoutIfNeeded];

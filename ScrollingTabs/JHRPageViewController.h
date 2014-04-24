@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JHRContainerViewController.h"
 
-@interface JHRPageViewController : UIViewController
+@interface JHRPageViewController : UIViewController <JHRPage>
 
 @end
