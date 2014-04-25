@@ -92,8 +92,6 @@ static NSInteger buttonMargin = 10;
     _tracker.translatesAutoresizingMaskIntoConstraints  = NO;
     _wrapper.translatesAutoresizingMaskIntoConstraints  = NO;
     
-    _wrapper.backgroundColor = [UIColor redColor];
-    
     [self addSubview:_wrapper];
     [_wrapper addSubview:_tracker];
     

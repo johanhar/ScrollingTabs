@@ -26,7 +26,6 @@
     _tabsView.tabsDelegate = self;
     
     [self createPagesAndTabs];
-     
 }
 
 - (void)viewDidLayoutSubviews
@@ -46,52 +45,36 @@
 
 - (void)createPagesAndTabs
 {
-    UIViewController<JHRPage> *en = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
-    UIViewController<JHRPage> *to = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
-    UIViewController<JHRPage> *tre = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
-    UIViewController<JHRPage> *fire = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
-    UIViewController<JHRPage> *fem = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
-    UIViewController<JHRPage> *seks = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
-    UIViewController<JHRPage> *syv = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
-    UIViewController<JHRPage> *atte = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
-    UIViewController<JHRPage> *ni = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
-    UIViewController<JHRPage> *ti = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
+    UIViewController<JHRPage> *one = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
+    UIViewController<JHRPage> *two = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
+    UIViewController<JHRPage> *house = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
+    UIViewController<JHRPage> *car = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
+    UIViewController<JHRPage> *something = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
+    UIViewController<JHRPage> *somethingelse = [self.storyboard instantiateViewControllerWithIdentifier:@"page"];
     
-    en.pageName = @"En";
-    to.pageName = @"To";
-    tre.pageName = @"Tre";
-    fire.pageName = @"Fire";
-    fem.pageName = @"Femmmmmmmmmmmmmmmmmm";
-    seks.pageName = @"Seks";
-    syv.pageName = @"Syv";
-    atte.pageName = @"Åtte";
-    ni.pageName = @"Ni";
-    ti.pageName = @"Ti";
+    one.pageName = @"One";
+    two.pageName = @"Two";
+    house.pageName = @"House";
+    car.pageName = @"Car";
+    something.pageName = @"Something";
+    somethingelse.pageName = @"Something else";
     
-    NSArray *viewControllers = @[en,
-                                 to,
-                                 tre,
-                                 fire,
-                                 fem,
-                                 seks,
-                                 syv,
-                                 atte,
-                                 ni,
-                                 ti];
+    NSArray *viewControllers = @[one,
+                                 two,
+                                 house,
+                                 car,
+                                 something,
+                                 somethingelse];
     
     _pagesViewController.viewControllers = viewControllers;
     
     
-    _tabsView.tabs          = @[@"En",
-                                @"To",
-                                @"Tre",
-                                @"Fire",
-                                @"Femmmmmmmmmmmmmmmmmm",
-                                @"Seks",
-                                @"Syv",
-                                @"Åtte",
-                                @"Ni",
-                                @"Ti"];
+    _tabsView.tabs          = @[@"One",
+                                @"Two",
+                                @"House",
+                                @"Car",
+                                @"Something",
+                                @"Something else"];
 
 }
 
@@ -110,13 +93,7 @@
 #pragma mark - JHRContainerViewControllerDelegate
 - (void)didGoToPage:(NSString *)page
 {
-    if ([page isEqualToString:@"Fire"]) {
-        _tabsView.tabs = @[@"Test", @"hehe", @"hehe", @"hehe", @"hehe", @"hehe", @"hehe", @"hehe", @"hehe", @"hehe", @"hehe", @"hehe"];
-        [_tabsView adjustContentSize];
-    } else {
-        [_tabsView highlightTab:page];
-    }
-    
+    [_tabsView highlightTab:page];
 }
 
 @end
